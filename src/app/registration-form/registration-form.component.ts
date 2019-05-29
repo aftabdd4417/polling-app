@@ -20,10 +20,13 @@ export class RegistrationFormComponent implements OnInit {
 
   constructor(private apiService: ApiService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.apiService.isLoggedIn()) {
+      this.router.navigate(["/homepage"]);
+    }
+  }
 
   async addNewUser(formData) {
-    console.log(formData);
     const apiData = {
       username: formData["email"],
       password: formData["password"],
@@ -36,8 +39,6 @@ export class RegistrationFormComponent implements OnInit {
         this.loginUser(apiData);
         this.router.navigate(["homepage"]);
       }
-
-      // console.log(res);
     } catch (error) {
       console.error(error);
     }

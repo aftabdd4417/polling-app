@@ -5,8 +5,6 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root"
 })
 export class ApiService {
-  allUsers1: any = [];
-
   constructor(private http: HttpClient) {}
 
   addUser(apiData) {
@@ -39,11 +37,27 @@ export class ApiService {
     }
   }
 
-  localStorageLogin(user: string, password: string): boolean {
-    if (user === "userdemo" && password === "passworddemo") {
-      localStorage.setItem("username", user);
-      return true;
+  addPoll(apiData) {
+    try {
+      return this.http.post(
+        "https://secure-refuge-14993.herokuapp.com/add_poll?title=" +
+          apiData.pollquest +
+          "&options=" +
+          apiData.option1 +
+          "____" +
+          apiData.option2 +
+          "____" +
+          apiData.option3 +
+          "____" +
+          apiData.option4,
+        apiData
+      );
+    } catch (error) {
+      throw error;
     }
-    return false;
+  }
+
+  isLoggedIn() {
+    return !!localStorage.getItem("accessToken");
   }
 }

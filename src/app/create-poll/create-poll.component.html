@@ -1,0 +1,104 @@
+<div class="section">
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="form" #f="ngForm">
+        <div class="form-group">
+          <input
+            type="text"
+            id="pollquest"
+            class="form-control"
+            placeholder="Type Poll Question"
+            name="pollquest"
+            required
+            [(ngModel)]="model.pollquest"
+            #pollquest="ngModel"
+          />
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input
+                type="text"
+                id="option1"
+                class="form-control"
+                placeholder="option1"
+                name="option1"
+                required
+                [(ngModel)]="model.option1"
+                #pollquest="ngModel"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input
+                type="text"
+                id="option2"
+                class="form-control"
+                placeholder="option2"
+                name="option2"
+                required
+                [(ngModel)]="model.option2"
+                #pollquest="ngModel"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input
+                type="text"
+                id="option3"
+                class="form-control"
+                placeholder="option3"
+                name="option3"
+                required
+                [(ngModel)]="model.option3"
+                #pollquest="ngModel"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input
+                type="text"
+                id="option4"
+                class="form-control"
+                placeholder="option4"
+                name="option4"
+                required
+                [(ngModel)]="model.option4"
+                #pollquest="ngModel"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          [disabled]="f.invalid"
+          (click)="addNewPoll(f.value)"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="alert alert-success" *ngIf="pollMessage == 0">
+      New Poll Added
+    </div>
+    <div class="alert alert-danger" *ngIf="pollMessage == 1">
+      Error
+    </div>
+  </div>
+</div>
+
+
+
