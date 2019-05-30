@@ -22,6 +22,7 @@ export class RegistrationFormComponent implements OnInit {
       password: formData["password"],
       role: formData["selectuser"]
     };
+    
     try {
       const res = await this.apiService.addUser(apiData).toPromise();
       this.registerdMessage = res["error"];
