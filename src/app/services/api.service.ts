@@ -5,8 +5,6 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root"
 })
 export class ApiService {
-  allUsers1: any = [];
-
   constructor(private http: HttpClient) {}
 
   addUser(apiData) {
@@ -37,13 +35,5 @@ export class ApiService {
     } catch (error) {
       throw error;
     }
-  }
-
-  localStorageLogin(user: string, password: string): boolean {
-    if (user === "userdemo" && password === "passworddemo") {
-      localStorage.setItem("username", user);
-      return true;
-    }
-    return false;
   }
 }
