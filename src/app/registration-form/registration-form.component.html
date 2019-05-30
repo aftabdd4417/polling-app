@@ -1,0 +1,110 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <h2>Enter Your Details</h2>
+      <form name="form" #f="ngForm">
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder="Email or Username"
+            name="email"
+            required
+            [(ngModel)]="model.email"
+            #email="ngModel"
+            email
+          />
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="email.errors.required">
+              Email is required.
+            </div>
+            <div *ngIf="email.errors.email">
+              Invalid Email.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            name="password"
+            [(ngModel)]="model.password"
+            required
+            #password="ngModel"
+          />
+          <div
+            *ngIf="password.invalid && password.touched"
+            class="alert alert-danger"
+          >
+            Password is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            [(ngModel)]="model.confirmPassword"
+            required
+            #confirmPassword="ngModel"
+          />
+          <div
+            *ngIf="model.confirmPassword != model.password"
+            class="alert alert-danger"
+          >
+            Not matched.
+          </div>
+        </div>
+
+        <div class="form-group">
+          Choose User Role
+          <select
+            class="form-control"
+            placeholder="Choose User Role"
+            name="selectuser"
+            [(ngModel)]="model.selectuser"
+            required
+            #selectuser="ngModel"
+          >
+            <option value="" selected="selected">Select User Role</option>
+            <option *ngFor="let user of users" [value]="user">{{
+              user
+            }}</option>
+          </select>
+          <div *ngIf="selectuser.required" class="alert alert-danger">
+            Please Select
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="addNewUser(f.value)"
+          [disabled]="f.invalid"
+        >
+          Submit
+        </button>
+        <br /><br />
+        <a routerLink="/login-form">Login</a>
+      </form>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-success" *ngIf="registerdMessage == 0">
+        Successfully Registered
+      </div>
+      <div class="alert alert-danger" *ngIf="registerdMessage == 1">
+        Account Already Exist
+      </div>
+    </div>
+  </div>
+</div>

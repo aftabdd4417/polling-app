@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <h2>Enter Your Login</h2>
+      <form name="form" #f="ngForm">
+        <div class="form-group">
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder="Email or Username"
+            name="email"
+            required
+            [(ngModel)]="model.email"
+            #email="ngModel"
+            email
+          />
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="email.errors.required">
+              Email is required.
+            </div>
+            <div *ngIf="email.errors.email">
+              Invalid Email.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            name="password"
+            [(ngModel)]="model.password"
+            required
+            #password="ngModel"
+          />
+          <div
+            *ngIf="password.invalid && password.touched"
+            class="alert alert-danger"
+          >
+            Password is required.
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="userLogin(f.value)"
+          [disabled]="f.invalid"
+        >
+          Submit
+        </button>
+        <br /><br />
+        <a routerLink="/registration-form">Register Now</a>
+      </form>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-success" *ngIf="registerdMessage == 0">
+        Logged-In successfully
+      </div>
+      <div class="alert alert-danger" *ngIf="registerdMessage == 1">
+        Invalid Login
+      </div>
+    </div>
+  </div>
+</div>
