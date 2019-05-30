@@ -1,9 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { environment } from "src/environments/environment";
-import { modelGroupProvider } from "@angular/forms/src/directives/ng_model_group";
 import { ApiService } from "../services/api.service";
-import { Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 
 @Component({
@@ -14,8 +10,6 @@ import { Router } from "@angular/router";
 export class RegistrationFormComponent implements OnInit {
   model: any = {};
   users: any = ["Admin", "Guest"];
-  yourData: any = {};
-  newUserData: any;
   registerdMessage: any;
 
   constructor(private apiService: ApiService, private router: Router) {}
@@ -32,12 +26,12 @@ export class RegistrationFormComponent implements OnInit {
       password: formData["password"],
       role: formData["selectuser"]
     };
+    
     try {
       const res = await this.apiService.addUser(apiData).toPromise();
       this.registerdMessage = res["error"];
       if (this.registerdMessage === 0) {
         this.loginUser(apiData);
-        this.router.navigate(["homepage"]);
       }
     } catch (error) {
       console.error(error);
@@ -49,6 +43,7 @@ export class RegistrationFormComponent implements OnInit {
     const resp = await this.apiService.login(apiData).toPromise();
     if (resp["error"] === 0) {
       localStorage.setItem("accessToken", resp["token"]);
+      this.router.navigate(["homepage"]);
     }
   }
 }
