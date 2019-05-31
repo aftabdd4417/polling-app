@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../services/api.service";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-create-poll",
@@ -7,25 +8,41 @@ import { ApiService } from "../services/api.service";
   styleUrls: ["./create-poll.component.css"]
 })
 export class CreatePollComponent implements OnInit {
-  model: any = {};
   pollMessage: any;
+  createPollForm: any;
+  apiInProgress: boolean;
 
   constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  createFormControl() {
+    this.createPollForm = new FormGroup({
+      pollquest: new FormControl("", [Validators.required]),
+      option1: new FormControl("", [Validators.required]),
+      option2: new FormControl("", [Validators.required]),
+      option3: new FormControl("", [Validators.required]),
+      option4: new FormControl("", [Validators.required])
+    });
+  }
 
-  async addNewPoll(formData) {
+  ngOnInit() {
+    this.createFormControl();
+  }
+  async addNewPoll(formValue) {
     const apiData = {
-      pollquest: formData["pollquest"],
-      option1: formData["option1"],
-      option2: formData["option2"],
-      option3: formData["option3"],
-      option4: formData["option4"]
+      pollquest: formValue["pollquest"],
+      option1: formValue["option1"],
+      option2: formValue["option2"],
+      option3: formValue["option3"],
+      option4: formValue["option4"]
     };
     try {
+      this.apiInProgress = true;
       const res = await this.apiService.addPoll(apiData).toPromise();
       this.pollMessage = res["error"];
+      this.apiInProgress = false;
+      this.createPollForm.reset();
     } catch (error) {
+      this.apiInProgress = false;
       console.error(error);
     }
   }

@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -20,7 +20,7 @@ import { AuthGuard } from "./auth.guard";
     HomepageComponent,
     CreatePollComponent
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, FormsModule,ReactiveFormsModule, AppRoutingModule, HttpClientModule],
   providers: [ApiService, AuthGuard],
   bootstrap: [AppComponent]
 })
