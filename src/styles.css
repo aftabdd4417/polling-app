@@ -2,3 +2,9 @@
 .row.home {
   border-top: 1px solid #ddd;
 }
+.ng-touched {
+  border-color: red;
+}
+.ng-valid {
+  border-color: #dbdbdb;
+}

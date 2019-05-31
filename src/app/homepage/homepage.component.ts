@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-homepage",
@@ -6,7 +7,18 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./homepage.component.css"]
 })
 export class HomepageComponent implements OnInit {
-  constructor() {}
+  polingtype: string;
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.polingtype = "createPoll";
+  }
+
+  showPage(pagetype) {
+    this.polingtype = pagetype;
+  }
+  logOut() {
+    localStorage.removeItem("accessToken");
+    this.router.navigate(["/login-form"]);
+  }
 }

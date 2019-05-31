@@ -14,7 +14,11 @@ export class RegistrationFormComponent implements OnInit {
 
   constructor(private apiService: ApiService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.apiService.isLoggedIn()) {
+      this.router.navigate(["/homepage"]);
+    }
+  }
 
   async addNewUser(formData) {
     const apiData = {

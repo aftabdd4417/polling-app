@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import { Router } from "@angular/router";
+import { routerNgProbeToken } from "@angular/router/src/router_module";
 
 @Component({
   selector: "app-login-form",
@@ -9,11 +10,13 @@ import { Router } from "@angular/router";
 })
 export class LoginFormComponent implements OnInit {
   registerdMessage: any;
-
   constructor(private apiService: ApiService, private router: Router) {}
-
   model: any = {};
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.apiService.isLoggedIn()) {
+      this.router.navigate(["/homepage"]);
+    }
+  }
 
   async userLogin(formData) {
     try {
