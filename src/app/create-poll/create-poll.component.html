@@ -125,7 +125,8 @@
   <div class="col-sm-4"></div>
 </div>
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-12 text-center">
+    <img *ngIf="apiInProgress" class="spinner" src="{{ spinner }}" />
     <div class="alert alert-success" *ngIf="pollMessage == 0">
       New Poll Added
     </div>

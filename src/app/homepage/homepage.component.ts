@@ -14,9 +14,6 @@ export class HomepageComponent implements OnInit {
     this.polingtype = "createPoll";
   }
 
-  showPage(pagetype) {
-    this.polingtype = pagetype;
-  }
   logOut() {
     localStorage.removeItem("accessToken");
     this.router.navigate(["/login-form"]);

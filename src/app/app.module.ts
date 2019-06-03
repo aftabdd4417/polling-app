@@ -11,6 +11,8 @@ import { RegistrationFormComponent } from "./registration-form/registration-form
 import { HomepageComponent } from "./homepage/homepage.component";
 import { CreatePollComponent } from "./create-poll/create-poll.component";
 import { AuthGuard } from "./auth.guard";
+import { ViewPollComponent } from "./view-poll/view-poll.component";
+import { PollService } from './services/poll.service';
 
 @NgModule({
   declarations: [
@@ -18,10 +20,17 @@ import { AuthGuard } from "./auth.guard";
     LoginFormComponent,
     RegistrationFormComponent,
     HomepageComponent,
-    CreatePollComponent
+    CreatePollComponent,
+    ViewPollComponent
   ],
-  imports: [BrowserModule, FormsModule,ReactiveFormsModule, AppRoutingModule, HttpClientModule],
-  providers: [ApiService, AuthGuard],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule
+  ],
+  providers: [ApiService, PollService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

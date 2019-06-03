@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { PollService } from '../services/poll.service';
 
 @Component({
   selector: "app-create-poll",
@@ -8,11 +9,15 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
   styleUrls: ["./create-poll.component.css"]
 })
 export class CreatePollComponent implements OnInit {
+  constructor(
+    private apiService: ApiService,
+    private pollServices: PollService
+  ) {}
+  
   pollMessage: any;
   createPollForm: any;
   apiInProgress: boolean;
-
-  constructor(private apiService: ApiService) {}
+  spinner: any = this.pollServices.spinnerGif;
 
   createFormControl() {
     this.createPollForm = new FormGroup({

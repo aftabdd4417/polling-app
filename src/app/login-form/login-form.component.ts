@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import { Router } from "@angular/router";
-import { routerNgProbeToken } from "@angular/router/src/router_module";
+import { PollService } from "../services/poll.service";
 
 @Component({
   selector: "app-login-form",
@@ -9,9 +9,17 @@ import { routerNgProbeToken } from "@angular/router/src/router_module";
   styleUrls: ["./login-form.component.css"]
 })
 export class LoginFormComponent implements OnInit {
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private pollServices: PollService
+  ) {}
+  
   registerdMessage: any;
-  constructor(private apiService: ApiService, private router: Router) {}
+  showSpinner: boolean = false;
+  spinner: any = this.pollServices.spinnerGif;
   model: any = {};
+
   ngOnInit() {
     if (this.apiService.isLoggedIn()) {
       this.router.navigate(["/homepage"]);
@@ -19,6 +27,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   async userLogin(formData) {
+    this.showSpinner = true;
     try {
       const apiData = {
         username: formData["email"],
@@ -27,19 +36,14 @@ export class LoginFormComponent implements OnInit {
       const res = await this.apiService.login(apiData).toPromise();
       this.registerdMessage = res["error"];
       if (this.registerdMessage === 0) {
-        this.loginUser(apiData);
+        localStorage.setItem("accessToken", res["token"]);
+        this.showSpinner = false;
+        this.router.navigate(["homepage"]);
       }
     } catch (error) {
+      this.showSpinner = false;
       console.error(error);
     }
-  }
-
-  async loginUser(apiData) {
-    delete apiData["role"];
-    const resp = await this.apiService.login(apiData).toPromise();
-    if (resp["error"] === 0) {
-      localStorage.setItem("accessToken", resp["token"]);
-      this.router.navigate(["homepage"]);
-    }
+    this.showSpinner = false;
   }
 }

@@ -89,9 +89,8 @@
           (click)="addNewUser(f.value)"
           [disabled]="f.invalid"
         >
-          Submit
-        </button>
-        <br /><br />
+          Submit</button
+        ><img *ngIf="showSpinner" class="spinner" src="{{ spinner }}" /> <br /><br />
         <a routerLink="/login-form">Login</a>
       </form>
     </div>

@@ -5,6 +5,7 @@ import { LoginFormComponent } from "./login-form/login-form.component";
 import { HomepageComponent } from "./homepage/homepage.component";
 import { CreatePollComponent } from "./create-poll/create-poll.component";
 import { AuthGuard } from "./auth.guard";
+import { ViewPollComponent } from './view-poll/view-poll.component';
 export const routes: Routes = [
   {
     path: "",
@@ -14,6 +15,21 @@ export const routes: Routes = [
   {
     path: "homepage",
     component: HomepageComponent,
+    children: [
+      {
+        path:'',
+        redirectTo: 'create-poll',
+        pathMatch: 'full' 
+    },
+      {
+        path: "create-poll",
+        component: CreatePollComponent
+      },
+      {
+        path: "view-poll",
+        component: ViewPollComponent
+      }
+    ],
     canActivate: [AuthGuard]
   },
   {
@@ -24,13 +40,11 @@ export const routes: Routes = [
     path: "registration-form",
     component: RegistrationFormComponent
   },
-  {
-    path: "create-poll",
-    component: CreatePollComponent
-  },
+ 
   {
     path: "**",
-    component: LoginFormComponent
+    redirectTo: 'login-form',
+    pathMatch: 'full'
   }
 ];
 @NgModule({

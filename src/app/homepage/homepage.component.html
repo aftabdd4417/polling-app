@@ -3,14 +3,14 @@
     <div class="col-sm-12">
       <nav class="navbar navbar-inverse">
         <ul class="nav navbar-nav">
-          <li [ngClass]="polingtype == 'createPoll' ? 'active' : ''">
-            <a (click)="showPage('createPoll')">Create Poll</a>
+          <li routerLinkActive="active">
+            <a routerLink="create-poll">Create Poll</a>
           </li>
-          <li [ngClass]="polingtype == 'viewPoll' ? 'active' : ''">
-            <a (click)="showPage('viewPoll')">View Poll</a>
+          <li routerLinkActive="active">
+            <a routerLink="view-poll">View Poll</a>
           </li>
-          <li [ngClass]="polingtype == 'takePoll' ? 'active' : ''">
-            <a (click)="showPage('takePoll')">Take Poll</a>
+          <li routerLinkActive="active">
+            <a routerLink="take-poll">Take Poll</a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -25,7 +25,8 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      <app-create-poll *ngIf="polingtype == 'createPoll'"></app-create-poll>
+      <router-outlet></router-outlet>
+      <!-- <app-create-poll *ngIf="polingtype == 'createPoll'"></app-create-poll> -->
     </div>
   </div>
 </div>

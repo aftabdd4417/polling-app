@@ -8,3 +8,7 @@
 .ng-valid {
   border-color: #dbdbdb;
 }
+img.spinner {
+  width: 48px;
+  padding: 0 6px;
+}
