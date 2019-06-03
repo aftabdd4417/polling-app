@@ -3,33 +3,50 @@ import { Routes, RouterModule } from "@angular/router";
 import { RegistrationFormComponent } from "./registration-form/registration-form.component";
 import { LoginFormComponent } from "./login-form/login-form.component";
 import { HomepageComponent } from "./homepage/homepage.component";
-
-const routes: Routes = [
+import { CreatePollComponent } from "./create-poll/create-poll.component";
+import { AuthGuard } from "./auth.guard";
+import { ViewPollComponent } from './view-poll/view-poll.component';
+export const routes: Routes = [
   {
     path: "",
-    redirectTo: "login-form",
+    redirectTo: "homepage",
     pathMatch: "full"
   },
-
+  {
+    path: "homepage",
+    component: HomepageComponent,
+    children: [
+      {
+        path:'',
+        redirectTo: 'create-poll',
+        pathMatch: 'full' 
+    },
+      {
+        path: "create-poll",
+        component: CreatePollComponent
+      },
+      {
+        path: "view-poll",
+        component: ViewPollComponent
+      }
+    ],
+    canActivate: [AuthGuard]
+  },
   {
     path: "login-form",
     component: LoginFormComponent
   },
-
   {
     path: "registration-form",
     component: RegistrationFormComponent
   },
-  {
-    path: "homepage",
-    component: HomepageComponent
-  },
+ 
   {
     path: "**",
-    component: LoginFormComponent
+    redirectTo: 'login-form',
+    pathMatch: 'full'
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]

@@ -52,7 +52,7 @@
           [disabled]="f.invalid"
         >
           Submit
-        </button>
+        </button><img *ngIf="showSpinner" class="spinner" src="{{spinner}}">
         <br /><br />
         <a routerLink="/registration-form">Register Now</a>
       </form>
@@ -61,6 +61,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
+      
       <div class="alert alert-success" *ngIf="registerdMessage == 0">
         Logged-In successfully
       </div>
