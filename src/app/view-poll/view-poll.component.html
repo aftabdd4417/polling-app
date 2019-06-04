@@ -1,89 +1,104 @@
-<div class="container" *ngFor="let poll of allPolls; let i = index">
-  <div class="question">
-    <form class="form-inline" name="titleForm">
-      <span *ngIf="!(updatetitleToggle && (poll._id == pollIdToggle))" class="h3">
-        Q.{{ i + 1 }}- {{ poll["title"] }}</span
-      >{{editQuestion.value}}
-      <input
-        *ngIf="updatetitleToggle && (poll._id == pollIdToggle)"
-        type="text"
-        class="form-control mb-2 mr-sm-2"
-        placeholder="Question"
-        name="editQuestion"
-        [formControl]="editQuestion"
-       
-        required
-      />
-      <button
-        class="btn btn-primary"
-        (click)="updatetitle(poll._id)"
-      >
-        {{ updatetitleToggle && poll._id == pollIdToggle ? "Submit" : "Edit Title" }}
-      </button>
-
-      <button class="btn btn-danger" (click)="deleteAPoll(poll._id)">
-        Delete Poll
-      </button>
-    </form>
+<div class="container">
+  <div class="spinner" *ngIf="showSpinner">
+    <img
+      src="https://www.looktotheright.com/wp-content/uploads/2015/12/spinner.gif"
+    />
   </div>
-  <div class="col-sm-12">
-    <div
-      class="option"
-      *ngFor="let pollOption of poll['options']; let i = index"
-    >
-      <div>
-        <span> {{ i + 1 }}. {{ pollOption["option"] }} </span>
-
-        <button
-          class="btn btn-danger"
-          (click)="deleteAnOption(poll._id, pollOption.option)"
+  <div class="poll-question" *ngFor="let poll of allPolls; let i = index">
+    <div class="question">
+      <form class="form-inline" name="titleForm">
+        <span class="h3"> Q.{{ i + 1 }}-</span>
+        <span
+          *ngIf="!(updatetitleToggle && poll._id == pollIdToggle)"
+          class="h3"
         >
-          Delete
+          {{ poll["title"] }}</span
+        >
+        <input
+          *ngIf="updatetitleToggle && poll._id == pollIdToggle"
+          type="text"
+          class="form-control mb-2 mr-sm-2"
+          placeholder="Question"
+          name="editQuestion"
+          [value]="poll['title']"
+          [(ngModel)]="poll['title']"
+          [formControl]="editQuestion"
+          required
+        />
+        <button class="btn btn-primary" (click)="updatetitle(poll._id)">
+          {{
+            updatetitleToggle && poll._id == pollIdToggle
+              ? "Submit"
+              : "Edit Title"
+          }}
         </button>
-      </div>
-      <div class="progress">
-        <div
-          class="progress-bar progress-bar-success"
-          role="progressbar"
-          aria-valuenow="70"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          [style.width.%]="pollOption['vote']"
-        >
-          {{ pollOption["vote"] }} Votes
+
+        <button class="btn btn-danger" (click)="deleteAPoll(poll._id, i)">
+          Delete Poll
+        </button>
+      </form>
+    </div>
+    <div class="col-sm-12">
+      <div
+        class="option"
+        *ngFor="let pollOption of poll['options']; let j = index"
+      >
+        <div>
+          <span> {{ j + 1 }}. {{ pollOption["option"] }} </span>
+
+          <button
+            class="btn btn-danger"
+            (click)="deleteAnOption(poll._id, pollOption.option, i, j)"
+            [disabled]="apiInProgress"
+          >
+            Delete
+          </button>
+        </div>
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-success"
+            role="progressbar"
+            aria-valuenow="70"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [style.width.%]="pollOption['vote']"
+          >
+            {{ pollOption["vote"] }} Votes
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <button class="btn btn-primary" (click)="OptionToggle(poll._id)">
-      {{ adOptionToggle && poll._id == pollIdToggle ? "Hide" : "Add option" }}
-    </button>
-    <div
-      class="jumbotron add-option"
-      *ngIf="adOptionToggle && poll._id == pollIdToggle"
-    >
-      <form name="form" #addOptionForm="ngForm">
-        <div class="form-group">
-          <input
-            type="text"
-            id="option"
-            class="form-control"
-            placeholder="Add option"
-            name="option"
-            required
-            [(ngModel)]="model.option"
-            #option="ngModel"
-          />
-        </div>
-        <button
-          class="btn btn-primary"
-          [disabled]="f.invalid"
-          (click)="addNewOption(addOptionForm.value, poll._id, addOptionForm)"
-        >
-          Submit
-        </button>
-      </form>
+    <div>
+      <button class="btn btn-primary" (click)="OptionToggle(poll._id)">
+        {{
+          addOptionToggle && poll._id == pollIdToggle ? "Hide" : "Add option"
+        }}
+      </button>
+      <div
+        class="jumbotron add-option"
+        *ngIf="addOptionToggle && poll._id == pollIdToggle"
+      >
+        <form name="form" [formGroup]="addOptionForm">
+          <div class="form-group">
+            <input
+              type="text"
+              id="option"
+              class="form-control"
+              placeholder="Add option"
+              name="option"
+              required
+              formControlName="option"
+            />
+          </div>
+          <button
+            class="btn btn-primary"
+            [disabled]="addOptionForm.invalid"
+            (click)="addNewOption(addOptionForm.value, poll._id, addOptionForm,i)"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

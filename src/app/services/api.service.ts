@@ -111,7 +111,7 @@ export class ApiService {
   updatePollTitle(id,title) {
     try {
       return this.http.put(
-        "https://secure-refuge-14993.herokuapp.com/update_poll_title?id="+id+"&title=newtitle"+title,
+        "https://secure-refuge-14993.herokuapp.com/update_poll_title?id="+id+"&title="+title,
         id
       );
     } catch (error) {
